@@ -1,0 +1,10 @@
+rancher:
+  hostname: rancher.example.com
+  bootstrapPassword: admin
+  replicas: 1
+  ingress:
+    tls:
+      source: letsEncrypt
+  letsEncrypt:
+    email: ops@example.com
+    environment: production

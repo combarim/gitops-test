@@ -1,7 +1,6 @@
 rancher:
   hostname: rancher.example.com
   bootstrapPassword: admin
-  priorityClassName: ""
   replicas: 1
   ingress:
     tls:

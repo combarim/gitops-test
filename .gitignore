@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+
+.vscode/
+.idea/
+
+charts/
+tmpcharts/
+*.tgz
+
+.env
+*.secret
+secrets.yaml

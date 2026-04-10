@@ -4,7 +4,4 @@ rancher:
   replicas: 1
   ingress:
     tls:
-      source: letsEncrypt
-  letsEncrypt:
-    email: ops@example.com
-    environment: production
+      source: rancher

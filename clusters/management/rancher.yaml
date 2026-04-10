@@ -4,7 +4,7 @@ metadata:
   name: rancher
   namespace: argocd
   labels:
-    cluster: platform
+    cluster: management
     app: rancher
   finalizers:
     - resources-finalizer.argocd.argoproj.io

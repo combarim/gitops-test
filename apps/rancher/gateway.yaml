@@ -4,7 +4,7 @@ metadata:
   name: rancher-gateway
   namespace: cattle-system
 spec:
-  gatewayClassName: cilium
+  gatewayClassName: envoy-gateway
   listeners:
     - name: http
       protocol: HTTP

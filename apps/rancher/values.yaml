@@ -1,5 +1,5 @@
 rancher:
-  hostname: rancher.example.com
+  hostname: rancher.inforisk.ma
   bootstrapPassword: admin
   replicas: 1
   ingress:

@@ -1,0 +1,9 @@
+metallb:
+  controller:
+    tolerations: []
+  speaker:
+    tolerations: []
+
+ipAddressPool:
+  addresses:
+    - 10.0.0.20/32

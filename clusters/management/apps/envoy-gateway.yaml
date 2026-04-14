@@ -11,9 +11,9 @@ metadata:
 spec:
   project: default
   source:
-    chart: gateway-helm
-    repoURL: oci://registry-1.docker.io/envoyproxy
-    targetRevision: 1.7.1
+    repoURL: https://github.com/combarim/gitops-test.git
+    targetRevision: main
+    path: apps/envoy-gateway
   destination:
     server: https://kubernetes.default.svc
     namespace: envoy-gateway-system
@@ -23,4 +23,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true

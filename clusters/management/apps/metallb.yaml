@@ -12,7 +12,7 @@ spec:
     targetRevision: main
     path: apps/metallb
   destination:
-    server: https://prod-api.example.com
+    server: https://kubernetes.default.svc
     namespace: metallb-system
   syncPolicy:
     automated:

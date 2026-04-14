@@ -7,12 +7,12 @@ spec:
   parentRefs:
     - name: rancher-gateway
   hostnames:
-    - rancher.inforisk.ma
+    - "rancher.inforisk.ma"
   rules:
     - matches:
-      - path:
-        type: PathPrefix
-        value: /
+        - path:
+            type: PathPrefix
+            value: /
       backendRefs:
         - name: rancher
           port: 80

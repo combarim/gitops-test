@@ -15,7 +15,7 @@ spec:
     targetRevision: main
     path: clusters/management/apps/envoy-gateway
     kustomize:
-      buildOptions: --enable-helm
+      enableHelm: true
   destination:
     server: https://kubernetes.default.svc
     namespace: envoy-gateway-system

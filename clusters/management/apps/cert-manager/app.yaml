@@ -17,7 +17,7 @@ spec:
     targetRevision: main
     path: clusters/management/apps/cert-manager
     kustomize:
-      buildOptions: --enable-helm
+      enableHelm: true
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager

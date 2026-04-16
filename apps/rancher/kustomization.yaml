@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - resources/gateway.yaml
+  - resources/httproute.yaml
+
+helmCharts:
+  - name: rancher
+    repo: https://releases.rancher.com/server-charts/stable
+    version: "2.13.3"
+    releaseName: rancher
+    namespace: cattle-system
+    valuesInline:
+      hostname: rancher.inforisk.ma
+      bootstrapPassword: admin
+      replicas: 1
+      ingress:
+        enabled: false

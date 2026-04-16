@@ -7,6 +7,4 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   addresses:
-    {{- range .Values.ipAddressPool.addresses }}
-    - {{ . }}
-    {{- end }}
+    - 10.0.0.20/32

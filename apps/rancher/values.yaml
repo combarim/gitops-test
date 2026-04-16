@@ -1,7 +1,0 @@
-rancher:
-  hostname: rancher.inforisk.ma
-  bootstrapPassword: admin
-  replicas: 1
-  ingress:
-    tls:
-      source: rancher

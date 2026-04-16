@@ -1,29 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rancher
+  name: envoy-gateway
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "1"
   labels:
     cluster: management
-    app: rancher
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    app: envoy-gateway
 spec:
   project: default
   source:
     repoURL: https://github.com/combarim/gitops-test.git
     targetRevision: main
-    path: apps/rancher
+    path: clusters/management/apps/envoy-gateway
   destination:
     server: https://kubernetes.default.svc
-    namespace: cattle-system
+    namespace: envoy-gateway-system
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true
-      - Retry=limit=10,backoff.duration=5s,backoff.factor=2,backoff.maxDuration=3m
+      - ServerSideApply=true  

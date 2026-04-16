@@ -14,6 +14,8 @@ spec:
     repoURL: https://github.com/combarim/gitops-test.git
     targetRevision: main
     path: clusters/management/apps/envoy-gateway
+    kustomize:
+      buildOptions: --enable-helm
   destination:
     server: https://kubernetes.default.svc
     namespace: envoy-gateway-system

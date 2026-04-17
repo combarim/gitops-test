@@ -1,18 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: management-root
+  name: argocd
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
     repoURL: https://github.com/combarim/gitops-test.git
     targetRevision: main
-    path: clusters/management/apps
+    path: ../../../../apps/argocd
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
@@ -21,4 +19,5 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
+      - CreateNamespace=true
       - ServerSideApply=true

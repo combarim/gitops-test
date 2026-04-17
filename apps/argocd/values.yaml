@@ -1,0 +1,17 @@
+global:
+  logging:
+    level: info
+    format: json
+
+configs:
+  cm:
+    kustomize.buildOptions: "--enable-helm"
+
+  rbac:
+    policy.default: role:readonly
+
+server:
+  replicas: 1
+  service:
+    type: NodePort
+    nodePortHttp: 30080

@@ -15,7 +15,7 @@ spec:
   source:
     repoURL: https://github.com/combarim/gitops-test.git
     targetRevision: main
-    path: clusters/management/apps/cert-manager
+    path: apps/cert-manager/overlays/mgmt
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager

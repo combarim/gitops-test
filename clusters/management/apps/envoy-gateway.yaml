@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: https://github.com/combarim/gitops-test.git
     targetRevision: main
-    path: clusters/management/apps/envoy-gateway
+    path: apps/envoy-gateway/overlays/mgmt
   destination:
     server: https://kubernetes.default.svc
     namespace: envoy-gateway-system

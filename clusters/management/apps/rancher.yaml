@@ -15,7 +15,7 @@ spec:
   source:
     repoURL: https://github.com/combarim/gitops-test.git
     targetRevision: main
-    path: clusters/management/apps/rancher
+    path: apps/rancher/overlays/mgmt
   destination:
     server: https://kubernetes.default.svc
     namespace: cattle-system

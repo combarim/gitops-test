@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/combarim/gitops-test.git
     targetRevision: main
-    path: clusters/management/apps/metallb
+    path: apps/metallb/overlays/mgmt
   destination:
     server: https://kubernetes.default.svc
     namespace: metallb-system

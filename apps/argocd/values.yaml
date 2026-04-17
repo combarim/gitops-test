@@ -7,8 +7,9 @@ configs:
   cm:
     kustomize.buildOptions: "--enable-helm"
 
-server:
-  replicas: 1
-  service:
-    type: NodePort
-    nodePortHttp: 30080
+argo-cd:
+  server:
+    replicas: 1
+    service:
+      type: NodePort
+      nodePortHttp: 30080

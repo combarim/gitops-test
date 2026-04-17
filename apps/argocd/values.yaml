@@ -7,9 +7,6 @@ configs:
   cm:
     kustomize.buildOptions: "--enable-helm"
 
-  rbac:
-    policy.default: role:readonly
-
 server:
   replicas: 1
   service:

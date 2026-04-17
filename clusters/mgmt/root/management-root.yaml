@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/combarim/gitops-test.git
     targetRevision: main
-    path: clusters/management
+    path: clusters/mgmt/apps
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

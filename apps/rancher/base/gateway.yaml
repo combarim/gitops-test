@@ -18,3 +18,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: rancher-tls-secret

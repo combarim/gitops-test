@@ -18,7 +18,9 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: rancher-tls-secret
+          - group: ''	
+            kind: Secret
+            name: rancher-tls-secret
       allowedRoutes:
         namespaces:
           from: All

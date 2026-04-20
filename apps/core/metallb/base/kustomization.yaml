@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ipaddresspool.yaml
   - l2advertisement.yaml
+  - namespace.yaml
 
 helmCharts:
   - name: metallb

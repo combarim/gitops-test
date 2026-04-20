@@ -8,7 +8,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/combarim/gitops-test.git
-        targetRevision: main
+        revision: main
         files:
           - path: "apps/core/*/config.json"
   template:

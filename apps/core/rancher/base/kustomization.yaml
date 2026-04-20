@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - gateway.yaml
   - httproute.yaml
+  - namespace.yaml
 
 helmCharts:
   - name: rancher

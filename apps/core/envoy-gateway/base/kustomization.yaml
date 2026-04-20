@@ -3,10 +3,12 @@ kind: Kustomization
 
 resources:
   - gateway-class.yaml
+  - namespace.yaml
+
 
 helmCharts:
   - name: gateway-helm
     repo: oci://docker.io/envoyproxy
     version: v1.7.1
     releaseName: envoy-gateway
-    namespace: envoy-gateway-system
+    namespace: envoy-gateway

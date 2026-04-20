@@ -1,4 +1,3 @@
 {
-  "syncWave": "0",
-  "namespace": "metallb-system"
+  "syncWave": "0"
 }

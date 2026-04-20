@@ -13,16 +13,16 @@ spec:
           - path: "apps/core/*/config.json"
   template:
     metadata:
-      name: '{{index .path.segments 2}}'
+      name: '{{.path.basenameNormalized}}'
       namespace: argocd
       annotations:
-        argocd.argoproj.io/sync-wave: '{{.syncWave}}'
+        argocd.argoproj.io/sync-wave: '{{default "0" .syncWave}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/combarim/gitops-test.git
         targetRevision: main
-        path: 'apps/core/{{index .path.segments 2}}/overlays/mgmt'
+        path: 'apps/core/{{.path.basenameNormalized}}/overlays/mgmt'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{.namespace}}'

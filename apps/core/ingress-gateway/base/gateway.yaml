@@ -1,8 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: rancher-gateway
-  namespace: cattle-system
+  name: main-gateway
 spec:
   gatewayClassName: envoy-gateway
   listeners:
@@ -18,9 +17,8 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - group: ""
-            kind: Secret
-            name: rancher-tls-secret
+          - kind: Secret
+            name: wildcard-tls-secret
       allowedRoutes:
         namespaces:
           from: All

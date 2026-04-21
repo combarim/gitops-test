@@ -20,7 +20,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: '{{.url}}'
+        repoURL: https://github.com/combarim/gitops-test.git
         targetRevision: main
         path: 'apps/core/{{.path.basenameNormalized}}/overlays/mgmt'
       destination:

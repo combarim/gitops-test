@@ -6,9 +6,8 @@ global:
 configs:
   cm:
     kustomize.buildOptions: "--enable-helm"
+  params:
+    server.insecure: true
 
 server:
   replicas: 1
-  service:
-    type: NodePort
-    nodePortHttp: 30080

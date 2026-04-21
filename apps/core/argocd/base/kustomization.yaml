@@ -3,6 +3,9 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - certificates.yaml
+  - gateway.yaml
+  - httproute.yaml
 
 helmCharts:
   - name: argo-cd

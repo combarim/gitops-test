@@ -1,0 +1,43 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: argocd-selfsigned-issuer
+  namespace: argocd
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-ca
+  namespace: argocd
+spec:
+  secretName: argocd-tls-ca
+  commonName: argocd-ca
+  isCA: true
+  issuerRef:
+    name: argocd-selfsigned-issuer
+    kind: Issuer
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: argocd-ca-issuer
+  namespace: argocd
+spec:
+  ca:
+    secretName: argocd-tls-ca
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-tls
+  namespace: argocd
+spec:
+  secretName: argocd-tls-secret
+  commonName: argocd.inforisk.ma
+  dnsNames:
+    - argocd.inforisk.ma
+  issuerRef:
+    name: argocd-ca-issuer
+    kind: Issuer

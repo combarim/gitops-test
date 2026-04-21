@@ -17,5 +17,6 @@ helmCharts:
       hostname: rancher.inforisk.ma
       bootstrapPassword: admin
       replicas: 1
+      tls: external
       ingress:
         enabled: false

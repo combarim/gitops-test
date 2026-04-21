@@ -19,5 +19,5 @@ spec:
         - group: ""
           kind: Service
           name: rancher
-          port: 443
+          port: 80
           weight: 100

@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: management-apps
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/cascade-delete
 spec:
   goTemplate: true
   generators:

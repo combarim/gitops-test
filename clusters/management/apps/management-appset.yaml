@@ -47,3 +47,4 @@ spec:
         jqPathExpressions:
           - '.status'
           - '.metadata.labels["longhorn-manager"]'
+          - '.spec.preserveUnknownFields'

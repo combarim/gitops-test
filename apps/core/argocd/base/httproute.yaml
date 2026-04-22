@@ -4,7 +4,8 @@ metadata:
   name: argocd-http-route
 spec:
   parentRefs:
-    - name: internal-gateway
+    - kind: Gateway
+      name: internal-gateway
       namespace: ingress-gateway
   hostnames:
     - argocd.internal.inforisk.ma
@@ -14,5 +15,7 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: argocd-server
+        - group: ""
+          kind: Service
+          name: argocd-server
           port: 80

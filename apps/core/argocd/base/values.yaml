@@ -13,6 +13,7 @@ configs:
       - '.metadata.labels["longhorn-manager"]'
       jsonPointers:
       - /spec/preserveUnknownFields
+      - /spec/conversion/webhook/clientConfig/caBundle
   params:
     server.insecure: true
 

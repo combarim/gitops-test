@@ -7,6 +7,12 @@ configs:
   cm:
     kustomize.buildOptions: "--enable-helm"
     url: ""
+    resource.customizations.ignoreDifferences.apiextensions.k8s.io_CustomResourceDefinition: |
+      jqPathExpressions:
+      - '.status'
+      - '.metadata.labels["longhorn-manager"]'
+      jsonPointers:
+      - /spec/preserveUnknownFields
   params:
     server.insecure: true
 

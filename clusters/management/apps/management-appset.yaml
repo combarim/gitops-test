@@ -13,7 +13,7 @@ spec:
           - path: "apps/core/*/config.json"
   template:
     metadata:
-      name: 'mgmt-{{.path.basenameNormalized}}'
+      name: '{{.path.basenameNormalized}}-mgmt'
       namespace: argocd
       annotations:
         argocd.argoproj.io/sync-wave: '{{default "0" .syncWave}}'

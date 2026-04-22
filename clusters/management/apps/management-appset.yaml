@@ -46,3 +46,4 @@ spec:
         name: '*.longhorn.io'
         jqPathExpressions:
           - '.status'
+          - '.metadata.labels["longhorn-manager"]'

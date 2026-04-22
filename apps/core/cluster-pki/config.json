@@ -1,4 +1,4 @@
 {
-    "syncWave": 2,
+    "syncWave": "2",
     "namespace": "cert-manager"
 }

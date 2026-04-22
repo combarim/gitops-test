@@ -1,9 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-commonAnnotations:
-  argocd.argoproj.io/compare-options: IgnoreExtraneous
-
 resources:
   - namespace.yaml
   - storage-class.yaml
@@ -24,7 +21,6 @@ helmCharts:
         backupstorageMinimalAvailablePercentage: 10
         createDefaultDiskLabeledNodes: true
         disableSchedulingOnCordonedNode: "true"
-        engineReplicaTimeout: "20m"
         replicaSoftAntiAffinity: "true"
       csi:
         attacherReplicaCount: 1

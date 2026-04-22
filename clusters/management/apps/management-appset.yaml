@@ -20,7 +20,7 @@ spec:
       annotations:
         argocd.argoproj.io/sync-wave: '{{default "0" .syncWave}}'
     spec:
-      project: default
+      project: core-infrastructure
       source:
         repoURL: https://github.com/combarim/gitops-test.git
         targetRevision: main
@@ -32,6 +32,11 @@ spec:
         automated:
           prune: true
           selfHeal: true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
         syncOptions:
-          - CreateNamespace=true
           - ServerSideApply=true

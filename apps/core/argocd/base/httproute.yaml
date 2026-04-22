@@ -2,12 +2,12 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: argocd-http-route
-  namespace: argocd
 spec:
   parentRefs:
-    - name: argocd-gateway
+    - name: internal-gateway
+      namespace: ingress-gateway
   hostnames:
-    - argocd.inforisk.ma
+    - argocd.internal.inforisk.ma
   rules:
     - matches:
         - path:

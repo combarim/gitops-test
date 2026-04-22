@@ -1,0 +1,11 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: internal-gateway-tls
+  namespace: ingress-gateway
+spec:
+  dnsNames:
+    - "*.internal.inforisk.ma"
+    - "internal.inforisk.ma"
+

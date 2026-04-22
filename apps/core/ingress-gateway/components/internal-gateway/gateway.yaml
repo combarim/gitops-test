@@ -1,7 +1,8 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: main-gateway
+  name: internal-gateway
+  namespace: ingress-gateway
 spec:
   gatewayClassName: envoy-gateway
   listeners:
@@ -18,7 +19,7 @@ spec:
         mode: Terminate
         certificateRefs:
           - kind: Secret
-            name: ingress-tls-cert
+            name: internal-gateway-tls
       allowedRoutes:
         namespaces:
           from: All

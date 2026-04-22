@@ -18,7 +18,7 @@ spec:
         mode: Terminate
         certificateRefs:
           - kind: Secret
-            name: wildcard-tls-secret
+            name: ingress-tls-cert
       allowedRoutes:
         namespaces:
           from: All

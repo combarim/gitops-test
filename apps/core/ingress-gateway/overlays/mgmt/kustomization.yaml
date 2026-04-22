@@ -16,3 +16,13 @@ patches:
       - op: add
         path: /spec/dnsNames
         value: ["*.inforisk.ma", "inforisk.ma"]
+      - op: replace
+        path: /spec/secretName
+        value: "tls-inforisk-ma"
+  - target:
+      kind: Gateway
+      name: main-gateway
+    patch: |-
+      - op: replace
+        path: /spec/listeners/1/tls/certificateRefs/0/name
+        value: "tls-inforisk-ma"

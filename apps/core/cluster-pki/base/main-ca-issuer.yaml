@@ -1,0 +1,9 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: main-ca-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  ca:
+    secretName: root-ca-tls-secret

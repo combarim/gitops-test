@@ -1,11 +1,11 @@
 auth:
-  rootUser: "minioadmin"
-  rootPassword: "minioadmin_password"
+  rootUser: "admin"
+  rootPassword: "admin"
 
 # Création automatique des buckets pour Mimir et Loki
 defaultBuckets: "mimir-blocks,mimir-ruler,loki-data,loki-ruler"
 
 persistence:
   enabled: true
-  storageClass: "longhorn"
+  storageClass: "longhorn-prod"
   size: 10Gi

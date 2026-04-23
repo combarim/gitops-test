@@ -9,3 +9,8 @@ persistence:
   enabled: true
   storageClass: "longhorn-prod"
   size: 10Gi
+
+image:
+  registry: docker.io
+  repository: bitnamilegacy/minio
+  tag: 2025.7.23-debian-12-r3

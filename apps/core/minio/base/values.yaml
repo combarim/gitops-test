@@ -8,4 +8,4 @@ defaultBuckets: "mimir-blocks,mimir-ruler,loki-data,loki-ruler"
 persistence:
   enabled: true
   storageClass: "longhorn"
-  size: 50Gi
+  size: 10Gi

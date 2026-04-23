@@ -11,8 +11,8 @@ loki:
       admin: loki-data
     s3:
       endpoint: minio.observability.svc:9000
-      accessKeyId: minioadmin
-      secretAccessKey: minioadmin_password
+      accessKeyId: admin
+      secretAccessKey: admin
       s3ForcePathStyle: true
       insecure: true
 

@@ -4,7 +4,7 @@ kind: Kustomization
 helmCharts:
   - name: minio
     repo: https://charts.bitnami.com/bitnami
-    version: 14.6.0
+    version: 17.0.21
     releaseName: minio
     namespace: observability
     valuesFile: values.yaml

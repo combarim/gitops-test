@@ -7,5 +7,5 @@ resources:
 helmCharts:
   - name: prometheus-operator-crds
     repo: https://prometheus-community.github.io/helm-charts
-    version: 13.0.1
+    version: 28.0.1
     releaseName: prometheus-crds

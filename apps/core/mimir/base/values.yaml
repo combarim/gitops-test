@@ -50,9 +50,9 @@ global:
   extraVolumes:
     - name: root-ca
       secret:
-        secretName: observability-ca-bundle
+        secretName: minio-server-tls
         items:
-          - key: tls.crt
+          - key: ca.crt
             path: ca.crt
   extraVolumeMounts:
     - name: root-ca

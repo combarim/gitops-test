@@ -50,13 +50,13 @@ global:
   extraVolumes:
     - name: root-ca
       secret:
-        secretName: minio-server-tls
+        secretName: observability-ca-bundle
         items:
-          - key: ca.crt
-            path: ca.crt
+          - key: tls.crt
+            path: ca-bundle.crt
   extraVolumeMounts:
     - name: root-ca
-      mountPath: /etc/ssl/certs
+      mountPath: /etc/mimir/certs
       readOnly: true
 
 enterprise:

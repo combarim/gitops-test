@@ -45,7 +45,7 @@ global:
   extraVolumes:
     - name: root-ca
       secret:
-        secretName: root-ca-tls-secret
+        secretName: minio-server-tls
   extraVolumeMounts:
     - name: root-ca
       mountPath: /etc/mimir/certs

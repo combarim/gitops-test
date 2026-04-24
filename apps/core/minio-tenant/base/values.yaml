@@ -1,5 +1,13 @@
 tenant:
   name: minio
+  configSecret:
+    name: minio-root-creds
+  
+  buckets:
+    - name: loki-data
+    - name: loki-ruler
+    - name: mimir-data
+    - name: mimir-ruler
 
   pools:
     - name: data

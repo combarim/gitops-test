@@ -53,12 +53,10 @@ global:
         secretName: observability-ca-bundle
         items:
           - key: tls.crt
-            path: intermediate.crt
-          - key: ca.crt
-            path: root.crt
+            path: ca.crt
   extraVolumeMounts:
     - name: root-ca
-      mountPath: /etc/mimir/certs
+      mountPath: /etc/ssl/certs
       readOnly: true
 
 enterprise:
@@ -123,6 +121,14 @@ store_gateway:
     limits:
       memory: 256Mi
   persistentVolume:
+    size: 2Gi
+
+ruler:
+  enabled: false
+
+minio:
+  enabled: false
+e:
     size: 2Gi
 
 ruler:

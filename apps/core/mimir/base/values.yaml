@@ -4,10 +4,11 @@ mimir:
       storage:
         backend: s3
         s3:
-          endpoint: minio.observability.svc:9000
+          endpoint: minio.observability.svc:443
           access_key_id: ${MINIO_ACCESS_KEY}
           secret_access_key: ${MINIO_SECRET_KEY}
           insecure: true
+          s3_force_path_style: true
     blocks_storage:
       storage_prefix: mimir
       s3:

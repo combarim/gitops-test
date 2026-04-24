@@ -8,33 +8,18 @@ mimir:
           access_key_id: ${MINIO_ACCESS_KEY}
           secret_access_key: ${MINIO_SECRET_KEY}
           insecure: false
+          http:
+            tls_ca_path: /etc/mimir/certs/ca.crt
+            insecure_skip_verify: false
     blocks_storage:
       s3:
         bucket_name: mimir-data
-        endpoint: minio.observability.svc:443
-        access_key_id: ${MINIO_ACCESS_KEY}
-        secret_access_key: ${MINIO_SECRET_KEY}
-        http:
-          tls_ca_path: /etc/mimir/certs/ca.crt
-          insecure_skip_verify: false
     alertmanager_storage:
       s3:
         bucket_name: mimir-ruler
-        endpoint: minio.observability.svc:443
-        access_key_id: ${MINIO_ACCESS_KEY}
-        secret_access_key: ${MINIO_SECRET_KEY}
-        http:
-          tls_ca_path: /etc/mimir/certs/ca.crt
-          insecure_skip_verify: false
     ruler_storage:
       s3:
         bucket_name: mimir-ruler
-        endpoint: minio.observability.svc:443
-        access_key_id: ${MINIO_ACCESS_KEY}
-        secret_access_key: ${MINIO_SECRET_KEY}
-        http:
-          tls_ca_path: /etc/mimir/certs/ca.crt
-          insecure_skip_verify: false
 
 
 gateway:

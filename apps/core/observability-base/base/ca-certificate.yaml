@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: observability-ca
+spec:
+  isCA: true # Devient une autorité
+  commonName: "Observability Intermediate CA"
+  secretName: observability-ca-bundle
+  issuerRef:
+    name: main-ca-issuer
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: observability-issuer
+spec:
+  ca:
+    secretName: observability-ca-bundle

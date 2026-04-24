@@ -5,8 +5,8 @@ metadata:
 spec:
   secretName: minio-server-tls
   issuerRef:
-    name: main-ca-issuer
-    kind: ClusterIssuer
+    name: observability-issuer
+    kind: Issuer
   dnsNames:
     - minio
     - minio.observability

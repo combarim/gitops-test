@@ -2,7 +2,8 @@ tenant:
   name: minio
 
   pools:
-    - servers: 3
+    - name: data
+      servers: 3
       volumesPerServer: 1
       size: 20Gi
       storageClassName: longhorn-prod

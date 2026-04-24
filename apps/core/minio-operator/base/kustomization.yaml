@@ -6,7 +6,7 @@ helmCharts:
     repo: https://operator.min.io/
     version: 7.1.1
     releaseName: minio-operator
-    namespace: minio-operator
+    namespace: observability
     includeCRDs: true
     valuesInline:
       operator:

@@ -8,7 +8,6 @@ mimir:
           access_key_id: ${MINIO_ACCESS_KEY}
           secret_access_key: ${MINIO_SECRET_KEY}
           insecure: false
-          force_path_style: true
         http:
           tls_ca_path: /etc/mimir/certs/ca.crt
           insecure_skip_verify: false

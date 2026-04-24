@@ -7,8 +7,10 @@ mimir:
           endpoint: minio.observability.svc:443
           access_key_id: ${MINIO_ACCESS_KEY}
           secret_access_key: ${MINIO_SECRET_KEY}
-          insecure: true
-          s3_force_path_style: true
+          insecure: false
+          force_path_style: true
+          http_config:
+            ca_file: /etc/mimir/certs/ca.crt
     blocks_storage:
       storage_prefix: mimir
       s3:
@@ -40,6 +42,14 @@ global:
         secretKeyRef:
           name: minio-root-creds
           key: password
+  extraVolumes:
+    - name: root-ca
+      secret:
+        secretName: root-ca-tls-secret
+  extraVolumeMounts:
+    - name: root-ca
+      mountPath: /etc/mimir/certs
+      readOnly: true
 
 enterprise:
   enabled: false

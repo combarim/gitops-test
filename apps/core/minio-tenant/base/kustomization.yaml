@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - minio-creds.yaml
+  - certificate.yaml
 
 helmCharts:
   - name: tenant

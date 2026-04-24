@@ -8,7 +8,13 @@ tenant:
     name: minio-root-creds
     existingSecret: true
 
-  # Création automatique des buckets nécessaires
+  tls:
+    enabled: true
+    autoCert: false
+    externalCertSecret:
+      - name: minio-server-tls
+        type: kubernetes.io/tls
+
   buckets:
     - name: loki-data
     - name: loki-ruler

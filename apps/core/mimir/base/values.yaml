@@ -27,6 +27,13 @@ mimir:
 
 gateway:
   enabled: true
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
   nginx:
     config:
       resolver: rke2-coredns-rke2-coredns.kube-system.svc.cluster.local.
@@ -58,38 +65,44 @@ enterprise:
 rollout_operator:
   enabled: false
 
+# Configuration compacte pour PoC - ressources minimales
+alertmanager:
+  enabled: false  # Désactivé pour PoC
+
 ingester:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 512Mi
+      cpu: 50m
+      memory: 256Mi
     limits:
-      memory: 1Gi
+      memory: 512Mi
+  persistentVolume:
+    size: 2Gi
 
 querier:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 50m
+      memory: 128Mi
     limits:
-      memory: 512Mi
+      memory: 256Mi
 
 query_frontend:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 25m
+      memory: 64Mi
     limits:
-      memory: 256Mi
+      memory: 128Mi
 
 distributor:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
+      cpu: 50m
       memory: 128Mi
     limits:
       memory: 256Mi
@@ -98,19 +111,24 @@ compactor:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 25m
+      memory: 128Mi
     limits:
-      memory: 512Mi
+      memory: 256Mi
 
 store_gateway:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 25m
+      memory: 128Mi
     limits:
-      memory: 512Mi
+      memory: 256Mi
+  persistentVolume:
+    size: 2Gi
+
+ruler:
+  enabled: false  # Désactivé pour PoC
 
 minio:
   enabled: false

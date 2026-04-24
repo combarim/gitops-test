@@ -2,8 +2,9 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: observability-ca
+  namespace: observability
 spec:
-  isCA: true # Devient une autorité
+  isCA: true
   commonName: "Observability Intermediate CA"
   secretName: observability-ca-bundle
   issuerRef:
@@ -14,6 +15,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: observability-issuer
+  namespace: observability
 spec:
   ca:
     secretName: observability-ca-bundle

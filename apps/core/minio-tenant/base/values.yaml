@@ -1,8 +1,14 @@
 tenant:
   name: minio
+  
+  configuration:
+    name: minio-root-creds
+    
   configSecret:
     name: minio-root-creds
-  
+    existingSecret: true
+
+  # Création automatique des buckets nécessaires
   buckets:
     - name: loki-data
     - name: loki-ruler

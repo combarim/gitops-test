@@ -4,6 +4,6 @@ tenant:
   pools:
     - name: data
       servers: 3
-      volumesPerServer: 1
+      volumesPerServer: 2
       size: 20Gi
       storageClassName: longhorn-prod

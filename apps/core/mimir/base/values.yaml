@@ -43,6 +43,9 @@ global:
 enterprise:
   enabled: false
 
+rollout_operator:
+  enabled: false
+
 ingester:
   replicas: 1
   resources:

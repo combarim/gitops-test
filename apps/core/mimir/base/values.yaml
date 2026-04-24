@@ -9,7 +9,7 @@ mimir:
           secret_access_key: ${MINIO_SECRET_KEY}
           insecure: false
           http:
-            tls_ca_path: /etc/mimir/certs/
+            tls_ca_path: /etc/ssl/certs/ca.crt
             insecure_skip_verify: false
     blocks_storage:
       s3:

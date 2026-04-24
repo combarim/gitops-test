@@ -1,8 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - minio-creds.yaml
+secretGenerator:
+  - name: minio-root-creds
+    type: Opaque
+    literals:
+      - username=admin
+      - password=admin
+    options:
+      disableNameSuffixHash: true # Pour garder le nom exact 'minio-root-creds'
 
 helmCharts:
   - name: tenant

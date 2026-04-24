@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: minio-root-creds
-type: Opaque
-stringData:
-  username: admin
-  password: admin

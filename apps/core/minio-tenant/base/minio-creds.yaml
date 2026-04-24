@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minio-root-creds
+type: Opaque
+stringData:
+  # Pour MinIO Tenant (format export)
+  config.env: |-
+    export MINIO_ROOT_USER=admin
+    export MINIO_ROOT_PASSWORD=admin1234
+  # Pour Mimir/Loki (format clé simple)
+  username: admin
+  password: admin1234

@@ -9,7 +9,7 @@ mimir:
           secret_access_key: ${MINIO_SECRET_KEY}
           insecure: false
           http:
-            tls_ca_path: /etc/mimir/certs/ca.crt
+            tls_ca_path: /etc/mimir/certs/
             insecure_skip_verify: false
     blocks_storage:
       s3:
@@ -53,7 +53,9 @@ global:
         secretName: observability-ca-bundle
         items:
           - key: tls.crt
-            path: ca.crt
+            path: intermediate.crt
+          - key: ca.crt
+            path: root.crt
   extraVolumeMounts:
     - name: root-ca
       mountPath: /etc/mimir/certs

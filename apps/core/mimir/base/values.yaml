@@ -1,0 +1,97 @@
+mimir:
+  structuredConfig:
+    common:
+      storage:
+        backend: s3
+        s3:
+          endpoint: minio.observability.svc:9000
+          access_key_id: ${MINIO_ACCESS_KEY}
+          secret_access_key: ${MINIO_SECRET_KEY}
+          insecure: true
+    blocks_storage:
+      storage_prefix: mimir
+      s3:
+        bucket_name: mimir-data
+    alertmanager_storage:
+      storage_prefix: alertmanager
+      s3:
+        bucket_name: mimir-ruler
+    ruler_storage:
+      storage_prefix: ruler
+      s3:
+        bucket_name: mimir-ruler
+
+# Injection des secrets via variables d'environnement
+global:
+  extraEnv:
+    - name: MINIO_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: minio-root-creds
+          key: username
+    - name: MINIO_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: minio-root-creds
+          key: password
+
+enterprise:
+  enabled: false
+
+# Minimal resources
+ingester:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+
+querier:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+query_frontend:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+distributor:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+compactor:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+store_gateway:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+minio:
+  enabled: false

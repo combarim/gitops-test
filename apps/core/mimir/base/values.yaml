@@ -50,9 +50,9 @@ global:
   extraVolumes:
     - name: root-ca
       secret:
-        secretName: observability-ca-bundle
+        secretName: mimir-ca-bundle
         items:
-          - key: tls.crt
+          - key: ca-bundle.crt
             path: ca-bundle.crt
   extraVolumeMounts:
     - name: root-ca

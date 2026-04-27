@@ -3,6 +3,7 @@ minio:
 
 loki:
   auth_enabled: false
+  useTestSchema: true
   extraArgs:
     - -config.expand-env=true
   storage:

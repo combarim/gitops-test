@@ -44,9 +44,22 @@ global:
         secretKeyRef:
           name: minio-root-creds
           key: password
+  clusterLabel:
+    enabled: false
 
 enterprise:
   enabled: false
+
+# Use single replica storage for PoC
+metaMonitoring:
+  serviceMonitor:
+    enabled: false
+
+alertmanager:
+  persistentVolume:
+    enabled: true
+    storageClass: longhorn-observability
+    size: 1Gi
 
 rollout_operator:
   enabled: false
@@ -60,7 +73,11 @@ ingester:
     limits:
       memory: 512Mi
   persistentVolume:
-    size: 2Gi
+    enabled: true
+    storageClass: longhorn-observability
+    size: 1Gi
+  zoneAwareReplication:
+    enabled: false
 
 querier:
   replicas: 1
@@ -97,6 +114,10 @@ compactor:
       memory: 128Mi
     limits:
       memory: 256Mi
+  persistentVolume:
+    enabled: true
+    storageClass: longhorn-observability
+    size: 1Gi
 
 store_gateway:
   replicas: 1
@@ -107,18 +128,22 @@ store_gateway:
     limits:
       memory: 256Mi
   persistentVolume:
-    size: 2Gi
+    enabled: true
+    storageClass: longhorn-observability
+    size: 1Gi
+  zoneAwareReplication:
+    enabled: false
 
 ruler:
   enabled: false
 
 minio:
   enabled: false
-e:
+
+# Kafka for ingest storage (used by Mimir)
+kafka:
+  enabled: true
+  persistence:
+    enabled: true
+    storageClass: longhorn-observability
     size: 2Gi
-
-ruler:
-  enabled: false
-
-minio:
-  enabled: false

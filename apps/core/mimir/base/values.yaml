@@ -140,10 +140,6 @@ ruler:
 minio:
   enabled: false
 
-# Kafka for ingest storage (used by Mimir)
+# Disable Kafka - use classic mode for PoC (reduces storage needs)
 kafka:
-  enabled: true
-  persistence:
-    enabled: true
-    storageClass: longhorn-observability
-    size: 2Gi
+  enabled: false

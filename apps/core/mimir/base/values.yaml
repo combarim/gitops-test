@@ -17,6 +17,9 @@ mimir:
     ruler_storage:
       s3:
         bucket_name: mimir-ruler
+    # Disable ingest storage (Kafka mode) - use classic ingestion
+    ingest_storage:
+      enabled: false
 
 
 gateway:

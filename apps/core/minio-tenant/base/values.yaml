@@ -9,11 +9,7 @@ tenant:
     existingSecret: true
 
   tls:
-    enabled: true
-    autoCert: false
-    externalCertSecret:
-      - name: minio-server-tls
-        type: kubernetes.io/tls
+    enabled: false
 
   buckets:
     - name: loki-data

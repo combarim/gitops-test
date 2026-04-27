@@ -39,6 +39,14 @@ global:
           name: minio-root-creds
           key: password
 
+# Disable caches for small cluster (insufficient memory)
+chunksCache:
+  enabled: false
+
+resultsCache:
+  enabled: false
+  allocatedMemory: 256
+
 # Lower resources for local deployment
 read:
   replicas: 1
@@ -54,7 +62,7 @@ write:
   resources:
     requests:
       cpu: 100m
-      memory: 256Mi
+      memory: 512Mi
     limits:
       memory: 1Gi
 
@@ -63,6 +71,6 @@ backend:
   resources:
     requests:
       cpu: 100m
-      memory: 256Mi
+      memory: 512Mi
     limits:
       memory: 1Gi

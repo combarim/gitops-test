@@ -17,9 +17,9 @@ mimir:
     ruler_storage:
       s3:
         bucket_name: mimir-ruler
-    # Disable ingest storage (Kafka mode) - use classic ingestion
-    ingest_storage:
-      enabled: false
+    ingester:
+      ring:
+        replication_factor: 1
 
 
 gateway:
@@ -81,6 +81,9 @@ ingester:
     size: 1Gi
   zoneAwareReplication:
     enabled: false
+  # Enable classic push mode (required when ingest storage is disabled)
+  extraArgs:
+    ingester.native-histograms-ingestion-enabled: "true"
 
 querier:
   replicas: 1
@@ -143,6 +146,13 @@ ruler:
 minio:
   enabled: false
 
-# Disable Kafka - use classic mode for PoC (reduces storage needs)
+# Kafka configuration for ingest storage
 kafka:
-  enabled: false
+  enabled: true
+  volumeClaimTemplate:
+    storageClassName: longhorn-observability
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 2Gi

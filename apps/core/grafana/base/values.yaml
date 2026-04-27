@@ -1,0 +1,31 @@
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Mimir
+        type: prometheus
+        url: http://mimir-query-frontend.observability.svc:8080/prometheus
+        access: proxy
+        isDefault: true
+      - name: Loki
+        type: loki
+        url: http://loki-gateway.observability.svc:80
+        access: proxy
+      - name: Alertmanager
+        type: alertmanager
+        url: http://mimir-alertmanager.observability.svc:8080
+        access: proxy
+        jsonData:
+          implementation: prometheus
+
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+    searchNamespace: ALL
+  datasources:
+    enabled: true
+    label: grafana_datasource
+    labelValue: "1"
+    searchNamespace: ALL

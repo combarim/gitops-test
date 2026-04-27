@@ -1,0 +1,47 @@
+minio:
+  enabled: false
+
+loki:
+  auth_enabled: false
+  storage:
+    type: s3
+    bucketNames:
+      chunks: loki-data
+      ruler: loki-ruler
+      admin: loki-data
+    s3:
+      endpoint: minio.observability.svc:9000
+      accessKeyId: admin
+      secretAccessKey: admin
+      s3ForcePathStyle: true
+      insecure: true
+
+deploymentMode: SimpleScalable
+
+# Lower resources for local deployment
+read:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+
+write:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+
+backend:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi

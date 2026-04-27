@@ -61,7 +61,7 @@ write:
   replicas: 1
   persistence:
     storageClass: longhorn-observability
-    size: 10Gi
+    size: 5Gi
   resources:
     requests:
       cpu: 100m
@@ -73,7 +73,7 @@ backend:
   replicas: 1
   persistence:
     storageClass: longhorn-observability
-    size: 10Gi
+    size: 5Gi
   resources:
     requests:
       cpu: 100m

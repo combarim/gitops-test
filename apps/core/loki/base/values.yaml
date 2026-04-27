@@ -3,6 +3,8 @@ minio:
 
 loki:
   auth_enabled: false
+  extraArgs:
+    - -config.expand-env=true
   storage:
     type: s3
     bucketNames:
@@ -10,13 +12,26 @@ loki:
       ruler: loki-ruler
       admin: loki-data
     s3:
-      endpoint: minio.observability.svc:9000
-      accessKeyId: admin
-      secretAccessKey: admin
+      endpoint: minio.observability.svc
+      accessKeyId: ${MINIO_ACCESS_KEY}
+      secretAccessKey: ${MINIO_SECRET_KEY}
       s3ForcePathStyle: true
       insecure: true
 
 deploymentMode: SimpleScalable
+
+global:
+  extraEnv:
+    - name: MINIO_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: minio-root-creds
+          key: username
+    - name: MINIO_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: minio-root-creds
+          key: password
 
 # Lower resources for local deployment
 read:

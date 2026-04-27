@@ -8,8 +8,8 @@ tenant:
     name: minio-root-creds
     existingSecret: true
 
-  tls:
-    enabled: false
+  certificate:
+    requestAutoCert: false
 
   buckets:
     - name: loki-data

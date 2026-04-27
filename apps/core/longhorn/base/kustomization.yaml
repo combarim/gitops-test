@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - storage-class.yaml
+  - storage-class-observability.yaml
 
 helmCharts:
   - name: longhorn

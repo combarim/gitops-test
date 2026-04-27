@@ -21,6 +21,11 @@ loki:
 
 deploymentMode: SimpleScalable
 
+gateway:
+  enabled: true
+  nginxConfig:
+    resolver: rke2-coredns-rke2-coredns.kube-system.svc.cluster.local.
+
 global:
   extraEnv:
     - name: MINIO_ACCESS_KEY

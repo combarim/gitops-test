@@ -4,13 +4,10 @@ mimir:
       storage:
         backend: s3
         s3:
-          endpoint: minio.observability.svc:443
+          endpoint: minio-hl.observability.svc:9000
           access_key_id: ${MINIO_ACCESS_KEY}
           secret_access_key: ${MINIO_SECRET_KEY}
-          insecure: false
-          http:
-            tls_ca_path: /etc/mimir/certs/ca-bundle.crt
-            insecure_skip_verify: false
+          insecure: true
     blocks_storage:
       s3:
         bucket_name: mimir-data
@@ -47,17 +44,6 @@ global:
         secretKeyRef:
           name: minio-root-creds
           key: password
-  extraVolumes:
-    - name: root-ca
-      secret:
-        secretName: mimir-ca-bundle
-        items:
-          - key: ca-bundle.crt
-            path: ca-bundle.crt
-  extraVolumeMounts:
-    - name: root-ca
-      mountPath: /etc/mimir/certs
-      readOnly: true
 
 enterprise:
   enabled: false

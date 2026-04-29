@@ -34,7 +34,28 @@ alloy:
 
       loki.source.kubernetes "local_pods" {
         targets    = discovery.kubernetes.all_pods.targets
+        forward_to = [loki.relabel.add_labels.receiver]
+      }
+
+      loki.relabel "add_labels" {
         forward_to = [loki.write.loki_service.receiver]
+
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          target_label  = "namespace"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          target_label  = "pod"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          target_label  = "container"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_node_name"]
+          target_label  = "node"
+        }
       }
 
       loki.write "loki_service" {

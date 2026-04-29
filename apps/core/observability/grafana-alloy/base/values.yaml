@@ -1,157 +1,50 @@
 alloy:
-  configMap:
-    create: true
+  config:
     content: |
-      discovery.kubernetes "pods" {
-        role = "pod"
-      }
-
-      discovery.kubernetes "nodes" {
-        role = "node"
-      }
-
-      discovery.kubernetes "services" {
-        role = "service"
-      }
-
-      discovery.kubernetes "endpoints" {
-        role = "endpoints"
-      }
+      // --- COLLECTE DES MÉTRIQUES (VictoriaMetrics) ---
+      discovery.kubernetes "pods" { role = "pod" }
+      discovery.kubernetes "services" { role = "service" }
 
       discovery.relabel "pods" {
         targets = discovery.kubernetes.pods.targets
-
         rule {
           source_labels = ["__meta_kubernetes_pod_annotation_prometheus_io_scrape"]
           action = "keep"
           regex = "true"
         }
-
-        rule {
-          source_labels = ["__meta_kubernetes_pod_annotation_prometheus_io_path"]
-          action = "replace"
-          target_label = "__metrics_path__"
-          regex = "(.+)"
-        }
-
-        rule {
-          source_labels = ["__address__", "__meta_kubernetes_pod_annotation_prometheus_io_port"]
-          action = "replace"
-          regex = "([^:]+)(?::\\d+)?;(\\d+)"
-          replacement = "$1:$2"
-          target_label = "__address__"
-        }
-
         rule {
           source_labels = ["__meta_kubernetes_namespace"]
           target_label = "namespace"
-        }
-
-        rule {
-          source_labels = ["__meta_kubernetes_pod_name"]
-          target_label = "pod"
-        }
-
-        rule {
-          source_labels = ["__meta_kubernetes_pod_container_name"]
-          target_label = "container"
-        }
-      }
-
-      discovery.relabel "services" {
-        targets = discovery.kubernetes.services.targets
-
-        rule {
-          source_labels = ["__meta_kubernetes_service_annotation_prometheus_io_scrape"]
-          action = "keep"
-          regex = "true"
-        }
-
-        rule {
-          source_labels = ["__meta_kubernetes_service_annotation_prometheus_io_path"]
-          action = "replace"
-          target_label = "__metrics_path__"
-          regex = "(.+)"
-        }
-
-        rule {
-          source_labels = ["__address__", "__meta_kubernetes_service_annotation_prometheus_io_port"]
-          action = "replace"
-          regex = "([^:]+)(?::\\d+)?;(\\d+)"
-          replacement = "$1:$2"
-          target_label = "__address__"
-        }
-
-        rule {
-          source_labels = ["__meta_kubernetes_namespace"]
-          target_label = "namespace"
-        }
-
-        rule {
-          source_labels = ["__meta_kubernetes_service_name"]
-          target_label = "service"
-        }
-      }
-
-      discovery.relabel "nodes" {
-        targets = discovery.kubernetes.nodes.targets
-
-        rule {
-          source_labels = ["__meta_kubernetes_node_name"]
-          target_label = "node"
         }
       }
 
       prometheus.scrape "pods" {
         targets    = discovery.relabel.pods.output
         forward_to = [prometheus.remote_write.victoria_metrics.receiver]
-        scrape_interval = "30s"
-        scrape_timeout = "10s"
-      }
-
-      prometheus.scrape "services" {
-        targets    = discovery.relabel.services.output
-        forward_to = [prometheus.remote_write.victoria_metrics.receiver]
-        scrape_interval = "30s"
-        scrape_timeout = "10s"
-      }
-
-      prometheus.scrape "kubelet" {
-        targets    = discovery.kubernetes.nodes.targets
-        forward_to = [prometheus.remote_write.victoria_metrics.receiver]
-        scheme = "https"
-        bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-        tls_config {
-          insecure_skip_verify = true
-        }
-        scrape_interval = "30s"
-      }
-
-      prometheus.exporter.self "alloy" { }
-
-      prometheus.scrape "alloy" {
-        targets    = prometheus.exporter.self.alloy.targets
-        forward_to = [prometheus.remote_write.victoria_metrics.receiver]
-        scrape_interval = "30s"
       }
 
       prometheus.remote_write "victoria_metrics" {
         endpoint {
           url = "http://victoria-metrics-victoria-metrics-single-server.observability.svc:8428/api/v1/write"
+        }
+      }
 
-          queue_config {
-            capacity = 10000
-            max_shards = 10
-            min_shards = 1
-            max_samples_per_send = 5000
-            batch_send_deadline = "5s"
-          }
+      // --- COLLECTE DES LOGS (Loki) ---
+      discovery.kubernetes "all_pods" { role = "pod" }
+
+      loki.source.kubernetes "local_pods" {
+        targets    = discovery.kubernetes.all_pods.targets
+        forward_to = [loki.write.loki_service.receiver]
+      }
+
+      loki.write "loki_service" {
+        endpoint {
+          url = "http://loki-gateway.observability.svc/loki/api/v1/push"
         }
       }
 
 controller:
   type: daemonset
-
   resources:
     requests:
       cpu: 100m
@@ -159,31 +52,8 @@ controller:
     limits:
       memory: 256Mi
 
-  securityContext:
-    runAsUser: 473
-    runAsNonRoot: true
-    fsGroup: 473
-    seccompProfile:
-      type: RuntimeDefault
-
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    readOnlyRootFilesystem: true
-    runAsUser: 473
-    runAsNonRoot: true
-
-  tolerations:
-    - effect: NoSchedule
-      operator: Exists
-
 rbac:
   create: true
 
 serviceAccount:
   create: true
-
-serviceMonitor:
-  enabled: false

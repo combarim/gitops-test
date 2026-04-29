@@ -5,5 +5,3 @@ resources:
   - ../../base
 components:
   - ../../components/internal-gateway
-patches:
-  - path: patches.yaml

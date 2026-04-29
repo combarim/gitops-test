@@ -1,5 +1,5 @@
 alloy:
-  config:
+  configMap:
     content: |
       // --- COLLECTE DES MÉTRIQUES (VictoriaMetrics) ---
       discovery.kubernetes "pods" { role = "pod" }

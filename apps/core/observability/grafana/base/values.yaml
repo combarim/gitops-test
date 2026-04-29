@@ -1,7 +1,7 @@
 replicas: 1
 
 admin:
-  existingSecret: grafana-admin-secret
+  existingSecret: ""
   userKey: admin-user
   passwordKey: admin-password
 

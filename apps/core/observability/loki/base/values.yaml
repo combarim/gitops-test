@@ -1,13 +1,21 @@
 loki:
+  auth_enabled: false
+  deploymentMode: SimpleScalable
+  
+  storage:
+    type: s3
+    bucketNames:
+      chunks: loki-chunks
+      ruler: loki-ruler
+      admin: loki-admin
+    s3:
+      endpoint: minio.observability.svc:80
+      accessKeyId: ${MINIO_ACCESS_KEY}
+      secretAccessKey: ${MINIO_SECRET_KEY}
+      s3ForcePathStyle: true
+      insecure: true
+
   structuredConfig:
-    auth_enabled: false
-
-    server:
-      http_listen_port: 3100
-      grpc_listen_port: 9095
-      grpc_server_max_recv_msg_size: 104857600
-      grpc_server_max_send_msg_size: 104857600
-
     common:
       path_prefix: /var/loki
       replication_factor: 1
@@ -15,22 +23,9 @@ loki:
         kvstore:
           store: inmemory
 
-    storage_config:
-      boltdb_shipper:
-        active_index_directory: /var/loki/boltdb-shipper-active
-        cache_location: /var/loki/boltdb-shipper-cache
-        shared_store: s3
-      aws:
-        s3: s3://minio.observability.svc:80/loki-chunks
-        endpoint: minio.observability.svc:80
-        access_key_id: ${MINIO_ACCESS_KEY}
-        secret_access_key: ${MINIO_SECRET_KEY}
-        s3forcepathstyle: true
-        insecure: true
-
     schema_config:
       configs:
-        - from: 2024-01-01
+        - from: "2024-01-01"
           store: tsdb
           object_store: s3
           schema: v13
@@ -38,61 +33,17 @@ loki:
             prefix: loki_index_
             period: 24h
 
+    limits_config:
+      retention_period: 168h
+      allow_structured_metadata: true
+
     compactor:
       working_directory: /var/loki/compactor
-      compaction_interval: 10m
       retention_enabled: true
-      retention_delete_delay: 2h
-      retention_delete_worker_count: 150
       delete_request_store: s3
-
-    limits_config:
-      ingestion_rate_mb: 10
-      ingestion_burst_size_mb: 20
-      max_label_name_length: 1024
-      max_label_value_length: 2048
-      max_label_names_per_series: 30
-      max_query_series: 500
-      max_query_parallelism: 32
-      max_query_length: 721h
-      max_query_lookback: 0
-      retention_period: 168h
-      max_streams_per_user: 10000
-      max_global_streams_per_user: 0
-      max_chunks_per_query: 2000000
-      max_entries_limit_per_query: 5000
-      max_line_size: 256KB
-      max_line_size_truncate: true
-      split_queries_by_interval: 15m
-      ruler_max_rules_per_rule_group: 20
-      ruler_max_rule_groups_per_tenant: 35
-
-    query_range:
-      align_queries_with_step: true
-      cache_results: true
-      results_cache:
-        cache:
-          embedded_cache:
-            enabled: true
-            max_size_mb: 100
-
-    ruler:
-      enable_api: true
-      rule_path: /tmp/loki/rules-temp
-      storage:
-        type: s3
-        s3:
-          bucketnames: loki-ruler
-
-    analytics:
-      reporting_enabled: false
-
-  useTestSchema: false
 
   extraArgs:
     - -config.expand-env=true
-
-deploymentMode: SimpleScalable
 
 global:
   extraEnv:
@@ -110,53 +61,27 @@ global:
 gateway:
   enabled: true
   replicas: 1
-  resources:
-    requests:
-      cpu: 50m
-      memory: 128Mi
-    limits:
-      memory: 256Mi
-  nginxConfig:
-    resolver: rke2-coredns-rke2-coredns.kube-system.svc.cluster.local.
+
+write:
+  replicas: 1
+  persistence:
+    enabled: true
+    storageClass: longhorn-observability
+    size: 5Gi
 
 read:
   replicas: 1
-  resources:
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
-      memory: 1Gi
   persistence:
     enabled: true
     storageClass: longhorn-observability
     size: 2Gi
 
-write:
-  replicas: 1
-  resources:
-    requests:
-      cpu: 100m
-      memory: 512Mi
-    limits:
-      memory: 1Gi
-  persistence:
-    enabled: true
-    storageClass: longhorn-observability
-    size: 3Gi
-
 backend:
   replicas: 1
-  resources:
-    requests:
-      cpu: 100m
-      memory: 512Mi
-    limits:
-      memory: 1Gi
   persistence:
     enabled: true
     storageClass: longhorn-observability
-    size: 3Gi
+    size: 2Gi
 
 chunksCache:
   enabled: false
@@ -164,15 +89,10 @@ chunksCache:
 resultsCache:
   enabled: false
 
-minio:
-  enabled: false
-
 monitoring:
   selfMonitoring:
     enabled: false
-    grafanaAgent:
-      installOperator: false
-  serviceMonitor:
-    enabled: false
   lokiCanary:
+    enabled: false
+  serviceMonitor:
     enabled: false

@@ -12,6 +12,3 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-      allowedRoutes:
-        namespaces:
-          from: All

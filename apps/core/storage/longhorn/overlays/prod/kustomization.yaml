@@ -3,7 +3,6 @@ kind: Kustomization
 
 namespace: longhorn-system
 
-
 resources:
   - ../../base
-  - storage-class-observability.yaml
+  - storage-class-prod.yaml

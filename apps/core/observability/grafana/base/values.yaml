@@ -1,0 +1,188 @@
+replicas: 1
+
+admin:
+  existingSecret: grafana-admin-secret
+  userKey: admin-user
+  passwordKey: admin-password
+
+persistence:
+  enabled: true
+  type: pvc
+  storageClassName: longhorn-observability
+  size: 2Gi
+  accessModes:
+    - ReadWriteOnce
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 512Mi
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: VictoriaMetrics
+        type: prometheus
+        url: http://victoria-metrics-victoria-metrics-single-server.observability.svc:8428
+        access: proxy
+        isDefault: true
+        editable: false
+        jsonData:
+          timeInterval: 30s
+          queryTimeout: 60s
+          httpMethod: POST
+
+      - name: Loki
+        type: loki
+        url: http://loki-gateway.observability.svc:80
+        access: proxy
+        editable: false
+        jsonData:
+          maxLines: 1000
+          timeout: 60
+
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+    searchNamespace: ALL
+    folder: /tmp/dashboards
+    folderAnnotation: grafana_folder
+    provider:
+      foldersFromFilesStructure: true
+
+  datasources:
+    enabled: true
+    label: grafana_datasource
+    labelValue: "1"
+    searchNamespace: ALL
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
+grafana.ini:
+  server:
+    root_url: "%(protocol)s://%(domain)s:%(http_port)s/"
+    serve_from_sub_path: false
+
+  security:
+    disable_initial_admin_creation: false
+    cookie_secure: false
+    cookie_samesite: lax
+    allow_embedding: false
+
+  users:
+    allow_sign_up: false
+    allow_org_create: false
+    auto_assign_org: true
+    auto_assign_org_role: Viewer
+
+  auth.anonymous:
+    enabled: false
+
+  log:
+    mode: console
+    level: info
+
+  analytics:
+    reporting_enabled: false
+    check_for_updates: false
+    check_for_plugin_updates: false
+
+  alerting:
+    enabled: false
+
+  unified_alerting:
+    enabled: false
+
+  dashboards:
+    default_home_dashboard_path: ""
+    versions_to_keep: 20
+    min_refresh_interval: 5s
+
+  dataproxy:
+    timeout: 30
+    keep_alive_seconds: 30
+
+  feature_toggles:
+    enable: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+image:
+  repository: grafana/grafana
+  pullPolicy: IfNotPresent
+
+plugins: []
+
+env: {}
+
+rbac:
+  create: true
+  pspEnabled: false
+
+serviceAccount:
+  create: true
+  autoMount: true
+
+testFramework:
+  enabled: false
+
+serviceMonitor:
+  enabled: false
+
+downloadDashboards:
+  enabled: false
+
+downloadDashboardsImage:
+  repository: curlimages/curl
+  tag: 7.85.0
+  pullPolicy: IfNotPresent
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboards: {}
+
+ingress:
+  enabled: false
+
+autoscaling:
+  enabled: false
+
+podDisruptionBudget:
+  minAvailable: 0
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 472
+  fsGroup: 472
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  seccompProfile:
+    type: RuntimeDefault

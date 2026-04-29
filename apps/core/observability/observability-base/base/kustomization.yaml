@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - ca-certificate.yaml
 
 helmCharts:
   - name: prometheus-operator-crds

@@ -5,10 +5,8 @@ metadata:
   namespace: observability
 type: Opaque
 stringData:
-  # Pour MinIO Tenant (format export)
   config.env: |-
     export MINIO_ROOT_USER=minio-admin-daf0e76d
     export MINIO_ROOT_PASSWORD=zD8juNScClssQe7X2cXr9lfvc3PttUIF
-  # Pour Mimir/Loki (format clé simple)
   username: minio-admin-daf0e76d
   password: zD8juNScClssQe7X2cXr9lfvc3PttUIF

@@ -12,7 +12,7 @@ spec:
         repoURL: https://github.com/combarim/gitops-test.git
         revision: main
         files:
-          - path: "apps/core/*/config.json"
+          - path: "apps/core/*/*/config.json"
   template:
     metadata:
       name: '{{.path.basenameNormalized}}-mgmt'
@@ -24,7 +24,7 @@ spec:
       source:
         repoURL: https://github.com/combarim/gitops-test.git
         targetRevision: main
-        path: 'apps/core/{{.path.basenameNormalized}}/overlays/mgmt'
+        path: 'apps/core/{{index .path.segments 2}}/{{index .path.segments 3}}/overlays/mgmt'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ .namespace }}'

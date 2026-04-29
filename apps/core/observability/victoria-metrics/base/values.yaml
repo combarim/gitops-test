@@ -1,0 +1,59 @@
+server:
+  replicaCount: 1
+
+  retentionPeriod: "7"
+
+  persistentVolume:
+    enabled: true
+    storageClass: longhorn-observability
+    size: 8Gi
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+
+  securityContext:
+    enabled: true
+    runAsUser: 1000
+    runAsNonRoot: true
+    fsGroup: 1000
+
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1000
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault
+
+  service:
+    type: ClusterIP
+    port: 8428
+
+  extraArgs:
+    envflag.enable: "true"
+    envflag.prefix: VM_
+    loggerFormat: json
+    memory.allowedPercent: "80"
+    search.maxQueryDuration: 60s
+    search.maxConcurrentRequests: "8"
+
+  env:
+    - name: VM_promscrape_maxScrapeSize
+      value: "16MB"
+
+serviceMonitor:
+  enabled: false
+
+rbac:
+  create: true
+  pspEnabled: false
+
+serviceAccount:
+  create: true

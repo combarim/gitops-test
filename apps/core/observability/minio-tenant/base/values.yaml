@@ -12,10 +12,8 @@ tenant:
     requestAutoCert: false
 
   buckets:
-    - name: loki-data
+    - name: loki-chunks
     - name: loki-ruler
-    - name: mimir-data
-    - name: mimir-ruler
 
   pools:
     - name: data

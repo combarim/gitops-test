@@ -4,7 +4,7 @@ kind: Kustomization
 helmCharts:
   - name: alloy
     repo: https://grafana.github.io/helm-charts
-    version: 0.13.1
+    version: 1.0.3
     releaseName: grafana-alloy
     namespace: observability
     valuesFile: values.yaml

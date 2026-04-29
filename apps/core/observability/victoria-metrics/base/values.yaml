@@ -15,7 +15,7 @@ server:
     limits:
       memory: 1Gi
 
-  securityContext:
+  podSecurityContext:
     enabled: true
     runAsUser: 1000
     runAsNonRoot: true

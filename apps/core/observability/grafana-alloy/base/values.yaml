@@ -32,13 +32,8 @@ alloy:
       // --- COLLECTE DES LOGS (Loki) ---
       discovery.kubernetes "all_pods" { role = "pod" }
 
-      loki.source.kubernetes "local_pods" {
-        targets    = discovery.kubernetes.all_pods.targets
-        forward_to = [loki.relabel.add_labels.receiver]
-      }
-
-      loki.relabel "add_labels" {
-        forward_to = [loki.write.loki_service.receiver]
+      discovery.relabel "pod_logs" {
+        targets = discovery.kubernetes.all_pods.targets
 
         rule {
           source_labels = ["__meta_kubernetes_namespace"]
@@ -56,6 +51,11 @@ alloy:
           source_labels = ["__meta_kubernetes_pod_node_name"]
           target_label  = "node"
         }
+      }
+
+      loki.source.kubernetes "local_pods" {
+        targets    = discovery.relabel.pod_logs.output
+        forward_to = [loki.write.loki_service.receiver]
       }
 
       loki.write "loki_service" {

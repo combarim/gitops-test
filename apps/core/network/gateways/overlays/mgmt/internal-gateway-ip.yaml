@@ -1,0 +1,9 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: internal-gateway
+  namespace: ingress-gateway
+spec:
+  infrastructure:
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: "10.0.0.210"
